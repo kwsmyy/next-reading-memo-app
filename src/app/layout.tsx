@@ -23,7 +23,9 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <NextAuthProvider>
-        <body className={`${notojp.className} antialiased`}>
+        <body
+          className={`${notojp.className} antialiased min-h-screen bg-gray-100`}
+        >
           <Header />
           {children}
         </body>

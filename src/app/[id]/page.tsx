@@ -5,6 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PlusCircle } from "lucide-react";
 import { BookData } from "../types/type";
 import { useState, useEffect } from "react";
+import MemoList from "../components/memoList";
+
 export default function BookMemosPage({ params }: { params: { id: string } }) {
   const id = params.id;
   const [book, setBook] = useState<BookData>();
@@ -24,24 +26,6 @@ export default function BookMemosPage({ params }: { params: { id: string } }) {
 
     fetchBook();
   }, [id]);
-
-  const bookMemos = {
-    id: 1,
-    title: "1984",
-    author: "George Orwell",
-    memos: [
-      {
-        id: 1,
-        content: "ビッグブラザーは全てを見ている...",
-        date: "2023-05-15",
-      },
-      {
-        id: 2,
-        content: "自由とは、2+2=4と言える自由である。",
-        date: "2023-05-16",
-      },
-    ],
-  };
 
   return (
     <main className="p-10">
@@ -67,20 +51,7 @@ export default function BookMemosPage({ params }: { params: { id: string } }) {
           </Button>
         </Link>
       </div>
-      <div className="space-y-4">
-        {bookMemos.memos.map((memo) => (
-          <Card key={memo.id}>
-            <CardHeader>
-              <CardTitle className="text-sm font-normal text-gray-500">
-                {memo.date}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p>{memo.content}</p>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      <MemoList />
     </main>
   );
 }
