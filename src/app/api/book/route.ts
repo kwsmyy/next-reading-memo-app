@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prismaClient";
+import { getServerSession } from "next-auth";
 
 export async function POST(req: NextRequest) {
   const data = await req.json();
@@ -29,4 +30,25 @@ export async function POST(req: NextRequest) {
   }
 
   return NextResponse.json({ message: "success" }, { status: 201 });
+}
+
+export async function GET(req: NextRequest) {
+  const session = await getServerSession();
+  console.log(session);
+  let books;
+  try {
+    if (!session?.user?.email) throw new Error("User not found");
+    books = await prisma.user.findUnique({
+      where: {
+        email: session?.user?.email, // ユーザーのメールアドレスで検索
+      },
+      include: {
+        book: true,
+      },
+    });
+  } catch {
+    return NextResponse.json({ error: "User not found" }, { status: 400 });
+  }
+
+  return NextResponse.json(books?.book);
 }

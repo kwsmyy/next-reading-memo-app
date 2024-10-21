@@ -1,21 +1,37 @@
 "use client";
+import React, { useState, useEffect } from "react";
 import { useSession, signOut } from "next-auth/react";
 import Loading from "./loading";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { BookData } from "./types/type";
 import { PlusCircle } from "lucide-react";
+import BookList from "./components/BookList";
+import { Suspense } from "react";
 
 export default function Home() {
   const { data: session, status } = useSession();
-  const books = [
-    { id: 1, title: "1984", author: "George Orwell" },
-    { id: 2, title: "To Kill a Mockingbird", author: "Harper Lee" },
-    { id: 3, title: "The Great Gatsby", author: "F. Scott Fitzgerald" },
-  ];
+
+  const [books, setBooks] = useState<BookData[]>([]);
+
+  useEffect(() => {
+    async function fetchBooks() {
+      const response = await fetch("/api/book", {
+        cache: "no-store",
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch books");
+      }
+      const fetchedBooks: BookData[] = await response.json();
+      console.log(fetchedBooks);
+      setBooks(fetchedBooks);
+    }
+
+    fetchBooks();
+  }, []);
 
   return (
-    <main className="flex items-center h-screen  w-full p-10 justify-center">
+    <main className="flex items-center h-screen w-full p-10 justify-center">
       <div className="w-full mt-10">
         {status === "loading" ? <Loading /> : <div>{session?.user?.email}</div>}
         <div className="m-4 w-full">
@@ -35,23 +51,9 @@ export default function Home() {
             </Button>
           </Link>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 w-full">
-          {books.map((book) => (
-            <Card key={book.id}>
-              <CardHeader>
-                <CardTitle>{book.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-gray-600">{book.author}</p>
-                <Link href={`/book/${book.id}`}>
-                  <Button variant="outline" className="mt-4">
-                    メモを見る
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+        <Suspense fallback={<Loading />}>
+          <BookList books={books} />
+        </Suspense>
       </div>
     </main>
   );

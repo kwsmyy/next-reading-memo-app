@@ -7,8 +7,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { validationBooksSchema } from "../schemas/validationBooksSchema";
+import { useRouter } from "next/navigation";
 
 export default function AddBookPage() {
+  const router = useRouter();
   const { data: session } = useSession();
 
   //react-hook-formの定義
@@ -33,7 +35,8 @@ export default function AddBookPage() {
       },
       method: "POST",
     });
-    console.log(response);
+    router.push("/");
+    router.refresh();
   }
 
   return (
