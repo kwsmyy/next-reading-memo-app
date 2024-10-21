@@ -28,7 +28,7 @@ export default function AddBookPage() {
     const email = session?.user?.email;
     console.log(title, author, email);
 
-    const response = await fetch("/api/book", {
+    await fetch("/api/book", {
       body: JSON.stringify({ title, author, email }),
       headers: {
         "Content-Type": "application/json",

@@ -1,8 +1,8 @@
 export type BookData = {
   id: number;
-  title: String;
-  author: String;
-  userId: String;
+  title: string;
+  author: string;
+  userId: string;
   createdAt: Date;
   updatedAt: Date;
 };
