@@ -23,7 +23,7 @@ export default function BookMemosPage({ params }: { params: { id: string } }) {
     }
 
     fetchBook();
-  }, []);
+  }, [id]);
 
   const bookMemos = {
     id: 1,

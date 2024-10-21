@@ -3,9 +3,9 @@ import prisma from "@/lib/prismaClient";
 
 export async function GET(
   req: Request,
-  { params }: { params: { id: String } }
+  { params }: { params: { id: string } }
 ) {
-  const bookId: String = params.id;
+  const bookId: string = params.id;
   const bookData = await prisma.book.findUnique({
     where: {
       id: bookId.toString(),
