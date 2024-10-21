@@ -11,8 +11,8 @@ const notojp = Noto_Sans_JP({
 });
 
 export const metadata: Metadata = {
-  title: "Next Auth",
-  description: "Next Auth",
+  title: "memo gAmI",
+  description: "memo gAmI",
 };
 
 export default function RootLayout({
