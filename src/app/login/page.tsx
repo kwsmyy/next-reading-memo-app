@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
@@ -9,7 +9,7 @@ import { z } from "zod";
 import { validationLoginSchema } from "../schemas/validationLoginSchema";
 
 export default function LoginPage() {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
   //apiからのエラーメッセージ
   const [responseError, setResponseError] = useState<Error>();
@@ -18,7 +18,6 @@ export default function LoginPage() {
   const {
     register,
     handleSubmit,
-    getValues,
     formState: { errors },
   } = useForm<z.infer<typeof validationLoginSchema>>({
     mode: "onChange",

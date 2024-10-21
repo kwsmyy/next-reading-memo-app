@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
     validationSignUpSchema.safeParse(data),
   ]);
 
-  let errors = validationResult.success
+  const errors = validationResult.success
     ? {}
     : validationResult.error.flatten().fieldErrors;
 

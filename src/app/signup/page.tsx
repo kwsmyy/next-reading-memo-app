@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
@@ -15,7 +15,7 @@ type Error = {
 };
 
 export default function SignUpPage() {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
   //apiからのエラーメッセージ
   const [responseError, setResponseError] = useState<Error>();
@@ -24,7 +24,6 @@ export default function SignUpPage() {
   const {
     register,
     handleSubmit,
-    getValues,
     formState: { errors },
   } = useForm<z.infer<typeof validationSignUpSchema>>({
     mode: "onChange",

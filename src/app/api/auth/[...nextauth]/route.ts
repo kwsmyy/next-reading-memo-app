@@ -23,6 +23,7 @@ const handler = NextAuth({
             where: { email: credentials?.email },
           });
         } catch (error) {
+          console.log(error);
           return null; // エラーが発生した場合はnullを返す
         }
         return user;
@@ -45,7 +46,7 @@ const handler = NextAuth({
   },
   callbacks: {
     async redirect({ url, baseUrl }) {
-      return "/";
+      return url.startsWith(baseUrl) ? url : baseUrl;
     },
   },
 });
