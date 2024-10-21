@@ -56,9 +56,6 @@ export default function SignUpPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="max-w-md w-full space-y-8 p-10 bg-white rounded-xl shadow-lg">
-        <div className="text-xs font-bold text-red-400 mb-4">
-          {responseError as React.ReactNode}
-        </div>
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             SignUp
@@ -84,7 +81,7 @@ export default function SignUpPage() {
                 })}
               </div>
             </div>
-            <div>
+            <div className="">
               <label htmlFor="password" className="sr-only">
                 パスワード
               </label>
@@ -92,7 +89,7 @@ export default function SignUpPage() {
                 id="password"
                 type="password"
                 {...register("password")}
-                className="appearance-none rounded-md relative block w-full px-3 py-4 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className=" mb-4 appearance-none rounded-md relative block w-full px-3 py-4 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="パスワード"
               />
               <div className="text-xs font-bold text-red-400 mb-2">

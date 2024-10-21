@@ -14,7 +14,7 @@ export default function Home() {
       <div className="mt-4">
         <button
           className="bg-blue-500 text-white py-4 px-2 rounded-md font-bold w-40"
-          onClick={() => signOut()}
+          onClick={() => signOut({ callbackUrl: "/" })}
         >
           Sign Out
         </button>

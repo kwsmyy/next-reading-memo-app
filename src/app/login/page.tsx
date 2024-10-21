@@ -32,7 +32,7 @@ export default function LoginPage() {
     const { email, password } = data;
     console.log(email, password);
     const response = await fetch("/api/login", {
-      body: JSON.stringify({ data }),
+      body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
       },
@@ -49,9 +49,6 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="max-w-md w-full space-y-8 p-10 bg-white rounded-xl shadow-lg">
-        <div className="text-xs font-bold text-red-400 mb-4">
-          {responseError as React.ReactNode}
-        </div>
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Login
@@ -99,7 +96,11 @@ export default function LoginPage() {
               ログイン
             </button>
           </div>
+          <div className="text-xs font-bold text-red-400 mb-4  text-center">
+            {responseError as React.ReactNode}
+          </div>
         </form>
+        {/* 
         <div>
           <button
             onClick={() => {
@@ -110,6 +111,7 @@ export default function LoginPage() {
             githubでログイン
           </button>
         </div>
+        */}
         <div>
           <button
             onClick={() => {
