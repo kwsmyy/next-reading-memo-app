@@ -7,6 +7,13 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { validationLoginSchema } from "../schemas/validationLoginSchema";
+import { Poiret_One } from "next/font/google";
+
+const poiret = Poiret_One({
+  weight: ["400"],
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export default function LoginPage() {
   const { data: session } = useSession();
@@ -48,10 +55,18 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="max-w-md w-full space-y-8 p-10 bg-white rounded-xl shadow-lg">
+        <div className="w-full max-w-md text-center  text-5xl italic p-5 ">
+          <h1
+            className={`${poiret.className} bg-gradient-to-r bg-clip-text text-transparent from-[#6366F1] via-[#8B5CF6] to-[#D946EF]`}
+          >
+            memo gAmI
+          </h1>
+        </div>
         <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Login
+          <h2 className="mt-6 text-center text-2xl font-bold text-gray-900">
+            ログイン
           </h2>
+          <p className="text-center text-gray-600">memo gami にようこそ</p>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit(handleLogin)}>
           <div className="rounded-md shadow-sm -space-y-px">
