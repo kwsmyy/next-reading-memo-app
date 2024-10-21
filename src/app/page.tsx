@@ -10,7 +10,7 @@ export default function Home() {
         <h1>Next Auth Home</h1>
       </div>
       <div className="m-2">ログイン中のユーザー</div>
-      {status === "loading" ? <Loading /> : <div>{session?.user?.name}</div>}
+      {status === "loading" ? <Loading /> : <div>{session?.user?.email}</div>}
       <div className="mt-4">
         <button
           className="bg-blue-500 text-white py-4 px-2 rounded-md font-bold w-40"
