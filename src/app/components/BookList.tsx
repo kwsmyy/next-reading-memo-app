@@ -16,7 +16,14 @@ export default function BookList({ books }: Props) {
           </CardHeader>
           <CardContent>
             <p className="text-sm text-gray-600">{book.author}</p>
-            <Link href={`/book/${book.id}`}>
+            <p className="text-sm text-gray-600">
+              {new Date(book.createdAt)
+                .toLocaleString("ja-JP", {
+                  timeZone: "Asia/Tokyo",
+                })
+                .slice(0, 18)}
+            </p>
+            <Link href={`/${book.id}`}>
               <Button variant="outline" className="mt-4">
                 メモを見る
               </Button>
