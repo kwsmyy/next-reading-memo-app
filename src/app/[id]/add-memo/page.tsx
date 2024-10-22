@@ -69,10 +69,14 @@ export default function AddMemoPage({ params }: { params: { id: string } }) {
   }
 
   async function handleSendImage() {
+    console.log(selectedFile?.name);
+
     setIsLoading(true);
     const formData = new FormData();
     formData.append("file", selectedFile as Blob);
-    const pathName = `${session?.user?.email}/${uuidv4()}`;
+    const pathName = `${session?.user?.email}/${uuidv4()}-${
+      selectedFile?.name
+    }`;
     const { data, error } = await supabase.storage
       .from("memogami")
       .upload(pathName, formData, {
