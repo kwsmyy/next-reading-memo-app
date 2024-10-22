@@ -51,24 +51,27 @@ export default function BookMemosPage({ params }: { params: { id: string } }) {
   }, [id]);
 
   return (
-    <main className="p-10">
+    <main className="lg:p-10 md:p-5 sm:p-2">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold">{book?.title}</h1>
-        <p className="text-gray-600">{book?.author}</p>
-        <p className="text-gray-600">
+        <h1 className="md:text-4xl text-2xl font-bold">{book?.title}</h1>
+        <p className="text-gray-600 md:text-2xl text-lg">{book?.author}</p>
+        <p className="text-gray-600 md:text-xl text-sm">
           {book
             ? new Date(book.createdAt)
                 .toLocaleString("ja-JP", {
                   timeZone: "Asia/Tokyo",
                 })
-                .slice(0, 18)
+                .slice(0, 19)
             : ""}
         </p>
       </div>
       <div className="mb-8 flex justify-between lg:w-1/2 mx-auto">
         <div className="flex items-center gap-2">
-          <Pencil className="h-10 w-10 text-indigo-500" aria-hidden="true" />
-          <h2 className="text-2xl font-semibold">読書メモ</h2>
+          <Pencil
+            className="md:h-10 md:w-10 h-6 w-6 text-indigo-500"
+            aria-hidden="true"
+          />
+          <h2 className="md:text-2xl text-xl font-semibold">読書メモ</h2>
         </div>
         <Link href={`/${book?.id}/add-memo`}>
           <Button>

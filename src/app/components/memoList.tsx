@@ -27,15 +27,17 @@ export default function MemoList({ memos }: { memos: MemoData[] }) {
                 .slice(0, 19)}
             </CardTitle>
           </CardHeader>
-          <CardContent className="relative">
+          <CardContent>
             <p className="whitespace-pre-wrap">{memo.content}</p>
-            <Button
-              variant="outline"
-              className="mt-4 hover:bg-red-400 hover:text-white absolute bottom-2 right-2"
-              onClick={() => handleDelete(memo.id.toString())}
-            >
-              <Trash className="h-4 w-4" />
-            </Button>
+            <div className="flex justify-end">
+              <Button
+                variant="outline"
+                className="mt-4 hover:bg-red-400 hover:text-white"
+                onClick={() => handleDelete(memo.id.toString())}
+              >
+                <Trash className="h-4 w-4" />
+              </Button>
+            </div>
           </CardContent>
         </Card>
       ))}

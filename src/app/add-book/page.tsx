@@ -40,8 +40,8 @@ export default function AddBookPage() {
   }
 
   return (
-    <main className="min-h-screen flex items-center justify-center">
-      <div className="w-full max-w-md px-10">
+    <main className="md:h-screen max-h-screen flex items-center justify-center">
+      <div className="w-full max-w-md px-10 lg:px-10 md:px-6 sm:px-4 lg:mt-0 md:mt-0 mt-10">
         <h1 className="mb-4 text-3xl font-bold">新しい本を追加</h1>
         <form className="space-y-6" onSubmit={handleSubmit(handleAddBook)}>
           <div className="space-y-2">

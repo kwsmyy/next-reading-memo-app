@@ -53,9 +53,9 @@ export default function LoginPage() {
     }
   }
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="h-screen flex items-center justify-center bg-gray-100">
       <div className="max-w-md w-full space-y-8 p-10 bg-white rounded-xl shadow-lg">
-        <div className="w-full max-w-md text-center  text-5xl italic p-5 ">
+        <div className="w-full max-w-md text-center italic text-5xl lg:p-5 md:p-2 sm:p-1">
           <h1
             className={`${poiret.className} bg-gradient-to-r bg-clip-text text-transparent from-[#6366F1] via-[#8B5CF6] to-[#D946EF]`}
           >

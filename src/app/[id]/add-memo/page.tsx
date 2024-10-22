@@ -61,8 +61,8 @@ export default function AddMemoPage({ params }: { params: { id: string } }) {
   }
 
   return (
-    <main className="min-h-screen flex items-center justify-center">
-      <div className="w-full lg:w-1/2 px-10">
+    <main className="md:h-screen max-h-screen flex items-center justify-center">
+      <div className="w-full lg:w-1/2 lg:px-10 md:px-6 sm:px-4 lg:mt-0 md:mt-0 mt-10">
         <h1 className="mb-2 text-3xl font-bold">{book?.title}</h1>
         <p className="mb-8 text-gray-600">{book?.author}</p>
         <form className="space-y-6" onSubmit={handleSubmit(handleAddBook)}>

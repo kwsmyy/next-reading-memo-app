@@ -32,17 +32,9 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="p-10">
+    <main className="lg:p-10 md:p-5 sm:p-2">
       <div className="w-full mt-10">
-        {status === "loading" ? <Loading /> : <div>{session?.user?.email}</div>}
-        <div className="m-4 w-full">
-          <button
-            className="bg-blue-500 text-white py-4 px-2 rounded-md font-bold w-40"
-            onClick={() => signOut({ callbackUrl: "/" })}
-          >
-            Sign Out
-          </button>
-        </div>
+        <div className="m-4 w-full"></div>
         <div className="flex items-center justify-between w-full mb-6">
           <div className="flex items-center justify-center gap-2">
             <Book className="h-10 w-10 text-indigo-500" aria-hidden="true" />

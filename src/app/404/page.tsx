@@ -5,16 +5,16 @@ import { BookX } from "lucide-react";
 
 export default function NotFound() {
   return (
-    <main className="flex flex-col items-center justify-center h-screen">
+    <main className="md:h-screen max-h-screen flex items-center justify-center ">
       <div className="text-center">
         <BookX
-          className="mx-auto h-24 w-24 text-indigo-500"
+          className="mx-auto h-10 w-10 text-indigo-500 md:mt-0 mt-10"
           aria-hidden="true"
         />
-        <h1 className="mt-6 text-4xl font-bold text-gray-900">
+        <h1 className="mt-6 text-2xl font-bold text-gray-900">
           404 - ページが見つかりません
         </h1>
-        <p className="mt-3 text-lg text-gray-600">
+        <p className="mt-3 text-md text-gray-600">
           お探しのページは存在しないか、移動した可能性があります。
         </p>
         <div className="mt-10">
@@ -24,18 +24,6 @@ export default function NotFound() {
             </Link>
           </Button>
         </div>
-      </div>
-      <div className="mt-16 text-center">
-        <p className="text-sm text-gray-500">
-          お探しのページが見つからない場合は、
-          <a
-            href="/contact"
-            className="font-medium text-indigo-600 hover:text-indigo-500"
-          >
-            お問い合わせ
-          </a>
-          ください。
-        </p>
       </div>
     </main>
   );
