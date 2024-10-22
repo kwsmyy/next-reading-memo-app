@@ -51,7 +51,7 @@ export default function Header_new() {
           <div className="flex items-center gap-2">
             <BookOpen className="h-8 w-8 text-indigo-600" aria-hidden="true" />
             <span
-              className={`text-md font-bold text-[#6366F1] ${poiret.className}`}
+              className={`text-xl font-bold text-[#6366F1] ${poiret.className}`}
             >
               memo gAmI
             </span>
@@ -68,7 +68,7 @@ export default function Header_new() {
             <div className="flex h-20 items-center justify-center border-b">
               <BookOpen className="mr-2 h-8 w-8 text-indigo-600" />
               <span
-                className={`text-md font-bold text-[#6366F1] ${poiret.className}`}
+                className={`text-xl font-bold text-[#6366F1] ${poiret.className}`}
               >
                 memo gAmI
               </span>
