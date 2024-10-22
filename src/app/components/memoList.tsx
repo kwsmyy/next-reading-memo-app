@@ -1,34 +1,41 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { MemoData } from "../types/type";
+import { Trash } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
-export default function MemoList() {
-  const bookMemos = {
-    id: 1,
-    title: "1984",
-    author: "George Orwell",
-    memos: [
-      {
-        id: 1,
-        content: "ビッグブラザーは全てを見ている...",
-        date: "2023-05-15",
-      },
-      {
-        id: 2,
-        content: "自由とは、2+2=4と言える自由である。",
-        date: "2023-05-16",
-      },
-    ],
-  };
+export default function MemoList({ memos }: { memos: MemoData[] }) {
+  const router = useRouter();
+  async function handleDelete(id: string) {
+    if (confirm("本当に削除しますか？")) {
+      await fetch(`/api/memo/${id}`, {
+        method: "DELETE",
+      });
+      router.refresh();
+    }
+  }
   return (
     <div className="space-y-4 lg:w-1/2 mx-auto">
-      {bookMemos.memos.map((memo) => (
+      {memos.map((memo) => (
         <Card key={memo.id}>
           <CardHeader>
             <CardTitle className="text-sm font-normal text-gray-500">
-              {memo.date}
+              {new Date(memo.createdAt)
+                .toLocaleString("ja-JP", {
+                  timeZone: "Asia/Tokyo",
+                })
+                .slice(0, 19)}
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <p>{memo.content}</p>
+          <CardContent className="relative">
+            <p className="whitespace-pre-wrap">{memo.content}</p>
+            <Button
+              variant="outline"
+              className="mt-4 hover:bg-red-400 hover:text-white absolute bottom-2 right-2"
+              onClick={() => handleDelete(memo.id.toString())}
+            >
+              <Trash className="h-4 w-4" />
+            </Button>
           </CardContent>
         </Card>
       ))}

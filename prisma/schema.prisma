@@ -76,9 +76,9 @@ model Comment {
   id        Int      @id @default(autoincrement())
   content   String
   bookId    String      // 外部キー
-  book      Book     @relation(fields: [bookId], references: [id]) // 外部キーリレーション
+  book      Book     @relation(fields: [bookId], references: [id],onDelete: Cascade) // 外部キーリレーション
   userId  String      // 外部キー
-  user    User     @relation(fields: [userId], references: [id]) // 外部キーリレーション
+  user    User     @relation(fields: [userId], references: [id],onDelete: Cascade) // 外部キーリレーション
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

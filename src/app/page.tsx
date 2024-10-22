@@ -8,6 +8,7 @@ import { BookData } from "./types/type";
 import { PlusCircle } from "lucide-react";
 import BookList from "./components/BookList";
 import { Suspense } from "react";
+import { Book } from "lucide-react";
 
 export default function Home() {
   const { data: session, status } = useSession();
@@ -31,7 +32,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="flex items-center h-screen w-full p-10 justify-center">
+    <main className="p-10">
       <div className="w-full mt-10">
         {status === "loading" ? <Loading /> : <div>{session?.user?.email}</div>}
         <div className="m-4 w-full">
@@ -42,8 +43,11 @@ export default function Home() {
             Sign Out
           </button>
         </div>
-        <div className="flex items-center justify-between w-full">
-          <h1 className="text-3xl font-bold mb-4">本の一覧</h1>
+        <div className="flex items-center justify-between w-full mb-6">
+          <div className="flex items-center justify-center gap-2">
+            <Book className="h-10 w-10 text-indigo-500" aria-hidden="true" />
+            <h1 className="text-2xl font-bold">本の一覧</h1>
+          </div>
           <Link href="/add-book">
             <Button>
               <PlusCircle className="mr-2 h-4 w-4" />
