@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PlusCircle } from "lucide-react";
 import { BookData } from "../types/type";
+import { MemoData } from "../types/type";
 import { useState, useEffect } from "react";
 import MemoList from "../components/memoList";
 
@@ -27,6 +28,21 @@ export default function BookMemosPage({ params }: { params: { id: string } }) {
     fetchBook();
   }, [id]);
 
+  useEffect(() => {
+    async function fetchMemos() {
+      const response = await fetch(`/api/memo/${id}`, {
+        cache: "no-store",
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch memos");
+      }
+      const fetchedMemos: MemoData[] = await response.json();
+      console.log(fetchedMemos);
+    }
+
+    fetchMemos();
+  }, [id]);
+
   return (
     <main className="p-10">
       <div className="mb-8">
@@ -42,9 +58,9 @@ export default function BookMemosPage({ params }: { params: { id: string } }) {
             : ""}
         </p>
       </div>
-      <div className="mb-8 flex justify-between">
+      <div className="mb-8 flex justify-between lg:w-1/2 mx-auto">
         <h2 className="text-2xl font-semibold">読書メモ</h2>
-        <Link href={`/book/${book?.id}/add-memo`}>
+        <Link href={`/${book?.id}/add-memo`}>
           <Button>
             <PlusCircle className="mr-2 h-4 w-4" />
             メモを追加

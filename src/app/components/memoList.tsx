@@ -19,7 +19,7 @@ export default function MemoList() {
     ],
   };
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 lg:w-1/2 mx-auto">
       {bookMemos.memos.map((memo) => (
         <Card key={memo.id}>
           <CardHeader>

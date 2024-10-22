@@ -50,6 +50,7 @@ export default function AddBookPage() {
               id="title"
               placeholder="本のタイトルを入力"
               {...register("title")}
+              className="bg-white py-6"
             />
           </div>
           <div className="text-xs font-bold text-red-400 mb-2">
@@ -61,6 +62,7 @@ export default function AddBookPage() {
               id="author"
               placeholder="著者名を入力"
               {...register("author")}
+              className="bg-white py-6"
             />
           </div>
           <div className="text-xs font-bold text-red-400 mb-2">
