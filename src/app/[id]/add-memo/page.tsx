@@ -202,8 +202,8 @@ export default function AddMemoPage({ params }: { params: { id: string } }) {
   */
 
   return (
-    <main className="md:h-screen max-h-screen flex items-center justify-center">
-      <div className="w-full lg:w-1/2 md:w-full lg:px-10 md:px-6 sm:px-4 lg:mt-0 md:mt-0 mt-5">
+    <main className="md:h-screen flex items-center justify-center mb-[300px]">
+      <div className="w-full lg:w-1/2 md:w-full lg:px-10 md:px-6 sm:px-4 lg:mt-0 md:mt-0 mt-500">
         <h1 className="mb-2 text-3xl font-bold">{book?.title}</h1>
         <p className="mb-8 text-gray-600">{book?.author}</p>
         <form className="space-y-6" onSubmit={handleSubmit(handleAddMemo)}>
@@ -224,7 +224,7 @@ export default function AddMemoPage({ params }: { params: { id: string } }) {
                 AIで画像をOCR
               </TabsTrigger>
             </TabsList>
-            <TabsContent value="text">
+            <TabsContent value="text" className="lg:mt-0 md:mt-0 mt-[50px]">
               <div className="space-y-2">
                 <Label htmlFor="memo">読書メモ</Label>
                 <Textarea
@@ -242,7 +242,7 @@ export default function AddMemoPage({ params }: { params: { id: string } }) {
                 メモを追加
               </Button>
             </TabsContent>
-            <TabsContent value="image">
+            <TabsContent value="image" className="lg:mt-0 md:mt-0 mt-[50px]">
               {isLoading ? (
                 <>
                   <div className="flex justify-center">
@@ -306,7 +306,7 @@ export default function AddMemoPage({ params }: { params: { id: string } }) {
                   <div className="mt-4 flex justify-center">
                     {selectedFile && (
                       <img
-                        className="w-[150px] h-[150px]"
+                        className="w-[150px]"
                         src={URL.createObjectURL(selectedFile as Blob)}
                         alt="selectedFile"
                       />
@@ -323,7 +323,7 @@ export default function AddMemoPage({ params }: { params: { id: string } }) {
                   </div>
                   {difyData && (
                     <>
-                      <div className="space-y-2 mb-2 mt-4">
+                      <div className="space-y-2 mb-2 mt-[50px]">
                         <Label htmlFor="memo">AIが読み取った読書メモ</Label>
                         <Textarea
                           id="memo"
