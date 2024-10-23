@@ -42,7 +42,6 @@ export default function SignUpPage() {
 
   async function handleSignUp(data: z.infer<typeof validationSignUpSchema>) {
     const { email, password } = data;
-    console.log(email, password);
     const response = await fetch("/api/signup", {
       body: JSON.stringify(data),
       headers: {
@@ -142,6 +141,16 @@ export default function SignUpPage() {
             </button>
           </div>
         </form>
+        <div>
+          <button
+            onClick={() => {
+              signIn("google");
+            }}
+            className="w-full py-2 px-4 bg-gray-400 rounded-md text-white hover:bg-gray-700 text-sm font-medium"
+          >
+            googleで登録
+          </button>
+        </div>
         <div className="w-full text-center">
           <Link
             href="/login"

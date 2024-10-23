@@ -9,11 +9,23 @@ import { PlusCircle } from "lucide-react";
 import BookList from "./components/BookList";
 import { Suspense } from "react";
 import { Book } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
   const { data: session, status } = useSession();
 
   const [books, setBooks] = useState<BookData[]>([]);
+
+  async function handleDelete(id: string) {
+    if (window.confirm("削除しますか？")) {
+      await fetch(`/api/book/${id}`, {
+        method: "DELETE",
+      });
+      router.push("/");
+      router.refresh();
+    }
+  }
 
   useEffect(() => {
     async function fetchBooks() {
@@ -24,7 +36,6 @@ export default function Home() {
         throw new Error("Failed to fetch books");
       }
       const fetchedBooks: BookData[] = await response.json();
-      console.log(fetchedBooks);
       setBooks(fetchedBooks);
     }
 
@@ -48,7 +59,7 @@ export default function Home() {
           </Link>
         </div>
         <Suspense fallback={<Loading />}>
-          <BookList books={books} />
+          <BookList books={books} handleDelete={handleDelete} />
         </Suspense>
       </div>
     </main>

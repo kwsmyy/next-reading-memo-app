@@ -28,7 +28,6 @@ export default function BookMemosPage({ params }: { params: { id: string } }) {
       if (!fetchedBooks) {
         router.push("/404");
       }
-      console.log(fetchedBooks);
       setBook(fetchedBooks);
     }
 
@@ -44,11 +43,20 @@ export default function BookMemosPage({ params }: { params: { id: string } }) {
         throw new Error("Failed to fetch memos");
       }
       const fetchedMemos: MemoData[] = await response.json();
-      console.log(fetchedMemos);
       setMemos(fetchedMemos);
     }
     fetchMemos();
   }, [id]);
+
+  async function handleDelete(memoId: string) {
+    if (confirm("本当に削除しますか？")) {
+      await fetch(`/api/memo/${memoId}`, {
+        method: "DELETE",
+      });
+      router.push(`/${id}`);
+      router.refresh();
+    }
+  }
 
   return (
     <main className="lg:p-10 md:p-5 sm:p-2 mb-[200px]">
@@ -80,7 +88,7 @@ export default function BookMemosPage({ params }: { params: { id: string } }) {
           </Button>
         </Link>
       </div>
-      <MemoList memos={memos} />
+      <MemoList memos={memos} handleDelete={handleDelete} />
     </main>
   );
 }

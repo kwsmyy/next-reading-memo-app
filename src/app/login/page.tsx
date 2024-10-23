@@ -36,7 +36,6 @@ export default function LoginPage() {
 
   async function handleLogin(data: z.infer<typeof validationLoginSchema>) {
     const { email, password } = data;
-    console.log(email, password);
     const response = await fetch("/api/login", {
       body: JSON.stringify(data),
       headers: {

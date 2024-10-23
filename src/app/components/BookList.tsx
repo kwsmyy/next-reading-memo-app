@@ -6,18 +6,11 @@ import { Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 type Props = {
   books: BookData[];
+  handleDelete: Function;
 };
 
-export default function BookList({ books }: Props) {
+export default function BookList({ books, handleDelete }: Props) {
   const router = useRouter();
-  async function handleDelete(id: string) {
-    if (window.confirm("削除しますか？")) {
-      await fetch(`/api/book/${id}`, {
-        method: "DELETE",
-      });
-      router.refresh();
-    }
-  }
 
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 w-full">

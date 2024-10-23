@@ -3,17 +3,14 @@ import { MemoData } from "../types/type";
 import { Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+type Props = {
+  memos: MemoData[];
+  handleDelete: Function;
+};
 
-export default function MemoList({ memos }: { memos: MemoData[] }) {
+export default function MemoList({ memos, handleDelete }: Props) {
   const router = useRouter();
-  async function handleDelete(id: string) {
-    if (confirm("本当に削除しますか？")) {
-      await fetch(`/api/memo/${id}`, {
-        method: "DELETE",
-      });
-      router.refresh();
-    }
-  }
+
   return (
     <div className="space-y-4 lg:w-1/2 mx-auto">
       {memos.map((memo) => (

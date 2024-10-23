@@ -40,7 +40,6 @@ export default function AddMemoPage({ params }: { params: { id: string } }) {
       if (!fetchedBook) {
         router.push("/404");
       }
-      console.log(fetchedBook);
       setBook(fetchedBook);
     }
 
@@ -60,7 +59,6 @@ export default function AddMemoPage({ params }: { params: { id: string } }) {
   async function handleAddMemo(data: z.infer<typeof validationMemoSchema>) {
     const { content } = data;
     const email = session?.user?.email;
-    console.log(content);
 
     await fetch("/api/memo", {
       body: JSON.stringify({ content, bookId: id, email }),
@@ -75,8 +73,6 @@ export default function AddMemoPage({ params }: { params: { id: string } }) {
 
   async function handleSendImage() {
     try {
-      console.log(selectedFile?.name);
-
       setIsLoading(true);
 
       // ファイルが選択されているかチェック
@@ -119,32 +115,33 @@ export default function AddMemoPage({ params }: { params: { id: string } }) {
       }
 
       const url = `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}${data?.path}`;
-      console.log(url);
-      console.log(process.env.NEXT_PUBLIC_DIFY_API_KEY);
 
-      const difyResponse = await fetch("http://localhost/v1/workflows/run", {
-        body: JSON.stringify({
-          inputs: {
-            FileURL: {
-              type: "image",
-              transfer_method: "remote_url",
-              url: url,
-              remote_url: url,
+      const difyResponse = await fetch(
+        `${process.env.NEXT_PUBLIC_DIFY_API_URL}`,
+        {
+          body: JSON.stringify({
+            inputs: {
+              FileURL: {
+                type: "image",
+                transfer_method: "remote_url",
+                url: url,
+                remote_url: url,
+              },
             },
+            user: "abc-123",
+            response_mode: "blocking",
+          }),
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${process.env.NEXT_PUBLIC_DIFY_API_KEY_NEW}`,
+            // prettier-ignore
           },
-          user: "abc-123",
-          response_mode: "blocking",
-        }),
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${process.env.NEXT_PUBLIC_DIFY_API_KEY}`, //APIキーを変更すること
-          // prettier-ignore
-        },
-        method: "POST",
-      });
+          method: "POST",
+        }
+      );
 
       const difyData = await difyResponse.json();
-      console.log(difyData?.data?.outputs?.result);
+
       setDifyData(difyData?.data?.outputs?.result);
     } catch (error) {
       console.error("エラー:", { error: error as Error });
@@ -224,7 +221,7 @@ export default function AddMemoPage({ params }: { params: { id: string } }) {
                 className=" data-[state=active]:bg-indigo-500 data-[state=active]:text-white"
               >
                 <ImageIcon className="mr-2 h-4 w-4" />
-                AIで画像から読み取る
+                AIで画像をOCR
               </TabsTrigger>
             </TabsList>
             <TabsContent value="text">
@@ -233,7 +230,7 @@ export default function AddMemoPage({ params }: { params: { id: string } }) {
                 <Textarea
                   id="memo"
                   placeholder="メモを入力してください"
-                  rows={6}
+                  rows={10}
                   className="bg-white"
                   {...register("content")}
                 />
@@ -329,7 +326,7 @@ export default function AddMemoPage({ params }: { params: { id: string } }) {
                           id="memo"
                           ref={textAreaRef}
                           placeholder="メモを入力してください"
-                          className="bg-white min-h-[100px] max-h-[400px] resize-none"
+                          className="bg-white min-h-[200px] max-h-[400px] resize-none"
                           value={difyData}
                           onChange={(e) => {
                             setDifyData(e.target.value);

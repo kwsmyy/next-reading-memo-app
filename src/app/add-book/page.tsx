@@ -26,7 +26,6 @@ export default function AddBookPage() {
   async function handleAddBook(data: z.infer<typeof validationBooksSchema>) {
     const { title, author } = data;
     const email = session?.user?.email;
-    console.log(title, author, email);
 
     await fetch("/api/book", {
       body: JSON.stringify({ title, author, email }),
