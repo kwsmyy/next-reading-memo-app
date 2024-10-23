@@ -248,6 +248,9 @@ export default function AddMemoPage({ params }: { params: { id: string } }) {
                   <div className="flex justify-center">
                     <p className="text-lg mb-4">AIが画像を読み込み中です...</p>
                   </div>
+                  <div className="flex justify-center">
+                    <p className="text-lg mb-4">1分程度かかりますごめんね...</p>
+                  </div>
                   <Loading />
                 </>
               ) : (
