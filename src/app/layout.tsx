@@ -6,6 +6,7 @@ import Sidebar from "./components/Sidebar";
 import NextAuthProvider from "../../src/lib/NextAuthProvider";
 import { Button } from "@/components/ui/button";
 import { List, BookOpen } from "lucide-react";
+import type { Viewport } from "next";
 
 const notojp = Noto_Sans_JP({
   weight: ["400", "500"],
@@ -16,8 +17,13 @@ const notojp = Noto_Sans_JP({
 export const metadata: Metadata = {
   title: "memo gAmI",
   description: "memo gAmI",
-  viewport:
-    "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no",
+};
+
+export const viewport: Viewport = {
+  initialScale: 1,
+  width: "device-width",
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({

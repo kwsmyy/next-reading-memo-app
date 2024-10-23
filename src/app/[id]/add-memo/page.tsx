@@ -37,6 +37,9 @@ export default function AddMemoPage({ params }: { params: { id: string } }) {
         throw new Error("Failed to fetch books");
       }
       const fetchedBook: BookData = await response.json();
+      if (!fetchedBook) {
+        router.push("/404");
+      }
       console.log(fetchedBook);
       setBook(fetchedBook);
     }
