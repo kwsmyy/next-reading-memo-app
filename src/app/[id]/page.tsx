@@ -51,7 +51,7 @@ export default function BookMemosPage({ params }: { params: { id: string } }) {
   }, [id]);
 
   return (
-    <main className="lg:p-10 md:p-5 sm:p-2">
+    <main className="lg:p-10 md:p-5 sm:p-2 mb-[200px]">
       <div className="mb-8">
         <h1 className="md:text-4xl text-2xl font-bold">{book?.title}</h1>
         <p className="text-gray-600 md:text-2xl text-lg">{book?.author}</p>

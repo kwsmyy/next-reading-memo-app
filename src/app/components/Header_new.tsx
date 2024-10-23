@@ -39,7 +39,7 @@ export default function Header_new() {
   } else {
     return (
       <>
-        <header className="flex h-16 items-center justify-between bg-white px-4 shadow-sm md:hidden">
+        <header className="sticky top-0 z-50 flex h-16 items-center justify-between bg-white px-4 shadow-sm md:hidden">
           <Button
             variant="ghost"
             size="icon"

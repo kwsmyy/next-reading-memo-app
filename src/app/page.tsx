@@ -32,7 +32,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="lg:p-10 md:p-5 sm:p-2">
+    <main className="lg:p-10 md:p-5 sm:p-2 mb-[200px]">
       <div className="w-full mt-10">
         <div className="m-4 w-full"></div>
         <div className="flex items-center justify-between w-full mb-6">

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -22,7 +22,9 @@ export default function AddMemoPage({ params }: { params: { id: string } }) {
   const { data: session } = useSession();
   const id = params.id;
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [difyData, setDifyData] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const [book, setBook] = useState<BookData>();
 
@@ -52,7 +54,7 @@ export default function AddMemoPage({ params }: { params: { id: string } }) {
     resolver: zodResolver(validationMemoSchema),
   });
 
-  async function handleAddBook(data: z.infer<typeof validationMemoSchema>) {
+  async function handleAddMemo(data: z.infer<typeof validationMemoSchema>) {
     const { content } = data;
     const email = session?.user?.email;
     console.log(content);
@@ -69,32 +71,142 @@ export default function AddMemoPage({ params }: { params: { id: string } }) {
   }
 
   async function handleSendImage() {
+    try {
+      console.log(selectedFile?.name);
+
+      setIsLoading(true);
+
+      // ファイルが選択されているかチェック
+      if (!selectedFile) {
+        throw new Error("ファイルが選択されていません。");
+      }
+
+      const formData = new FormData();
+      formData.append("file", selectedFile as Blob);
+
+      // UUIDの生成
+      let uuid;
+      try {
+        uuid = uuidv4();
+        if (!uuid) {
+          throw new Error("UUIDの生成に失敗しました。");
+        }
+      } catch (uuidError) {
+        console.error("UUID生成エラー:", uuidError);
+        setIsLoading(false);
+        return; // エラーが発生した場合、処理を中断
+      }
+
+      const fileType: string[] = selectedFile?.type.split("/");
+      const pathName = `${session?.user?.email}/${uuid}.${fileType[1]}`;
+
+      // Supabaseストレージにファイルをアップロード
+      const { data, error } = await supabase.storage
+        .from("memogami")
+        .upload(pathName, formData, {
+          cacheControl: "3600",
+          upsert: true,
+        });
+
+      // エラーチェック
+      if (error) {
+        throw new Error(
+          `ファイルのアップロードに失敗しました: ${error.message}`
+        );
+      }
+
+      const url = `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}${data?.path}`;
+      console.log(url);
+      console.log(process.env.NEXT_PUBLIC_DIFY_API_KEY);
+
+      const difyResponse = await fetch("http://localhost/v1/workflows/run", {
+        body: JSON.stringify({
+          inputs: {
+            FileURL: {
+              type: "image",
+              transfer_method: "remote_url",
+              url: url,
+              remote_url: url,
+            },
+          },
+          user: "abc-123",
+          response_mode: "blocking",
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${process.env.NEXT_PUBLIC_DIFY_API_KEY}`, //APIキーを変更すること
+          // prettier-ignore
+        },
+        method: "POST",
+      });
+
+      const difyData = await difyResponse.json();
+      console.log(difyData?.data?.outputs?.result);
+      setDifyData(difyData?.data?.outputs?.result);
+    } catch (error) {
+      console.error("エラー:", { error: error as Error });
+    } finally {
+      setSelectedFile(null);
+      setIsLoading(false);
+    }
+  }
+
+  /* エラーハンドリングしてなかった処理
+  async function handleSendImage() {
     console.log(selectedFile?.name);
 
     setIsLoading(true);
     const formData = new FormData();
     formData.append("file", selectedFile as Blob);
-    const pathName = `${session?.user?.email}/${uuidv4()}-${
-      selectedFile?.name
-    }`;
+    const uuid = await uuidv4();
+    const pathName = `${session?.user?.email}/${uuid}-${selectedFile?.name}`;
     const { data, error } = await supabase.storage
       .from("memogami")
       .upload(pathName, formData, {
         cacheControl: "3600",
-        upsert: false,
+        upsert: true,
       });
-    if (error) throw error;
+    const url = `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}${data?.path}`;
+    console.log(url);
+
+
+
+    const difyResponse = await fetch("http://localhost/v1/workflows/run", {
+      body: JSON.stringify({
+        inputs: {
+          FileURL: {
+            type: "image",
+            transfer_method: "remote_url",
+            url: url,
+            remote_url: url,
+          },
+        },
+        user: "abc-123",
+        response_mode: "blocking",
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${}`, //APIキーを変更すること
+        // prettier-ignore
+      },
+      method: "POST",
+    });
+
+    const difyData = await difyResponse.json();
+    console.log(difyData?.data?.outputs?.result);
+    setDifyData(difyData?.data?.outputs?.result);
+
     setSelectedFile(null);
-    console.log(data?.path);
     setIsLoading(false);
   }
+  */
 
   return (
     <main className="md:h-screen max-h-screen flex items-center justify-center">
-      <div className="w-full lg:w-1/2 lg:px-10 md:px-6 sm:px-4 lg:mt-0 md:mt-0 mt-5">
+      <div className="w-full lg:w-1/2 md:w-full lg:px-10 md:px-6 sm:px-4 lg:mt-0 md:mt-0 mt-5">
         <h1 className="mb-2 text-3xl font-bold">{book?.title}</h1>
         <p className="mb-8 text-gray-600">{book?.author}</p>
-        <form className="space-y-6" onSubmit={handleSubmit(handleAddBook)}>
+        <form className="space-y-6" onSubmit={handleSubmit(handleAddMemo)}>
           <Tabs defaultValue="text" className="w-full">
             <TabsList className="grid w-full grid-cols-2 bg-white  mt-8 mb-8">
               <TabsTrigger
@@ -132,7 +244,12 @@ export default function AddMemoPage({ params }: { params: { id: string } }) {
             </TabsContent>
             <TabsContent value="image">
               {isLoading ? (
-                <Loading />
+                <>
+                  <div className="flex justify-center">
+                    <p className="text-lg mb-4">AIが画像を読み込み中です...</p>
+                  </div>
+                  <Loading />
+                </>
               ) : (
                 <div>
                   <Label htmlFor="file-upload">
@@ -201,6 +318,36 @@ export default function AddMemoPage({ params }: { params: { id: string } }) {
                       画像を送信
                     </Button>
                   </div>
+                  {difyData && (
+                    <>
+                      <div className="space-y-2 mb-2 mt-4">
+                        <Label htmlFor="memo">AIが読み取った読書メモ</Label>
+                        <Textarea
+                          id="memo"
+                          ref={textAreaRef}
+                          placeholder="メモを入力してください"
+                          className="bg-white min-h-[100px] max-h-[400px] resize-none"
+                          value={difyData}
+                          onChange={(e) => {
+                            setDifyData(e.target.value);
+                            if (textAreaRef.current) {
+                              textAreaRef.current.style.height = "auto"; // 一旦高さをリセットしてから再計算
+                              textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`;
+                            }
+                          }}
+                        />
+                      </div>
+
+                      <Button
+                        onClick={() => {
+                          handleAddMemo({ content: difyData });
+                        }}
+                        className="w-full mb-10"
+                      >
+                        メモを追加
+                      </Button>
+                    </>
+                  )}
                 </div>
               )}
             </TabsContent>
