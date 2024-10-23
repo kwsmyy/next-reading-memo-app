@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 type Props = {
   memos: MemoData[];
-  handleDelete: Function;
+  handleDelete: (memoId: string) => void;
 };
 
 export default function MemoList({ memos, handleDelete }: Props) {

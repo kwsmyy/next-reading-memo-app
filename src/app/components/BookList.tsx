@@ -6,7 +6,7 @@ import { Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 type Props = {
   books: BookData[];
-  handleDelete: Function;
+  handleDelete: (bookId: string) => void;
 };
 
 export default function BookList({ books, handleDelete }: Props) {
