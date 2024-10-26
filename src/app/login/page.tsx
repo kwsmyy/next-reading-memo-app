@@ -8,8 +8,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { validationLoginSchema } from "../schemas/validationLoginSchema";
 import { Poiret_One } from "next/font/google";
+import { Shrikhand } from "next/font/google";
 
 const poiret = Poiret_One({
+  weight: ["400"],
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const shrikhand = Shrikhand({
   weight: ["400"],
   subsets: ["latin"],
   display: "swap",
@@ -56,7 +63,7 @@ export default function LoginPage() {
       <div className="max-w-md w-full space-y-8 p-10 bg-white rounded-xl shadow-lg">
         <div className="w-full max-w-md text-center italic text-5xl lg:p-5 md:p-2 sm:p-1">
           <h1
-            className={`${poiret.className} bg-gradient-to-r bg-clip-text text-transparent from-[#6366F1] via-[#8B5CF6] to-[#D946EF]`}
+            className={`${shrikhand.className} bg-gradient-to-r bg-clip-text text-transparent from-[#6366F1] via-[#8B5CF6] to-[#D946EF]`}
           >
             memo gAmI
           </h1>

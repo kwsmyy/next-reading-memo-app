@@ -7,12 +7,20 @@ import Link from "next/link";
 import { PlusCircle, LogOut } from "lucide-react";
 import { useSession, signOut } from "next-auth/react";
 import { Poiret_One } from "next/font/google";
+import { Shrikhand } from "next/font/google";
 
 const poiret = Poiret_One({
   weight: ["400"],
   subsets: ["latin"],
   display: "swap",
 });
+
+const shrikhand = Shrikhand({
+  weight: ["400"],
+  subsets: ["latin"],
+  display: "swap",
+});
+
 export default function Header_new() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -42,16 +50,16 @@ export default function Header_new() {
         <header className="sticky top-0 z-50 flex h-16 items-center justify-between bg-white px-4 shadow-sm md:hidden">
           <Button
             variant="ghost"
-            size="icon"
+            size="sm"
             aria-label="Toggle menu"
             onClick={toggleSidebar}
           >
-            <List className="h-6 w-6" />
+            <List className="h-20 w-20" />
           </Button>
           <div className="flex items-center gap-2">
             <BookOpen className="h-8 w-8 text-indigo-600" aria-hidden="true" />
             <span
-              className={`text-xl font-bold text-[#6366F1] ${poiret.className}`}
+              className={`text-2xl font-bold bg-gradient-to-r bg-clip-text text-transparent from-[#6366F1] via-[#8B5CF6] to-[#D946EF] ${shrikhand.className}`}
             >
               memo gAmI
             </span>
@@ -68,7 +76,7 @@ export default function Header_new() {
             <div className="flex h-20 items-center justify-center border-b">
               <BookOpen className="mr-2 h-8 w-8 text-indigo-600" />
               <span
-                className={`text-xl font-bold text-[#6366F1] ${poiret.className}`}
+                className={`text-2xl font-bold bg-gradient-to-r bg-clip-text text-transparent from-[#6366F1] via-[#8B5CF6] to-[#D946EF] ${shrikhand.className}`}
               >
                 memo gAmI
               </span>

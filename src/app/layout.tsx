@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Noto_Sans_JP } from "next/font/google";
+import { Noto_Serif_JP } from "next/font/google";
 import Header_new from "./components/Header_new";
 import Sidebar from "./components/Sidebar";
 import NextAuthProvider from "../../src/lib/NextAuthProvider";
@@ -9,6 +10,12 @@ import { List, BookOpen } from "lucide-react";
 import type { Viewport } from "next";
 
 const notojp = Noto_Sans_JP({
+  weight: ["400", "500"],
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const notoSerifJp = Noto_Serif_JP({
   weight: ["400", "500"],
   subsets: ["latin"],
   display: "swap",

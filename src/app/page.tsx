@@ -48,8 +48,11 @@ export default function Home() {
         <div className="m-4 w-full"></div>
         <div className="flex items-center justify-between w-full mb-6">
           <div className="flex items-center justify-center gap-2">
-            <Book className="h-10 w-10 text-indigo-500" aria-hidden="true" />
-            <h1 className="text-2xl font-bold">本の一覧</h1>
+            <Book
+              className="md:h-10 md:w-10 h-6 w-6 text-indigo-500"
+              aria-hidden="true"
+            />
+            <h2 className="md:text-2xl text-xl font-bold">本の一覧</h2>
           </div>
           <Link href="/add-book">
             <Button>

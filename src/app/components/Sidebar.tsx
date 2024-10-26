@@ -5,8 +5,15 @@ import { Button } from "@/components/ui/button";
 import { BookOpen, List, PlusCircle, LogOut } from "lucide-react";
 import { useSession, signOut } from "next-auth/react";
 import { Poiret_One } from "next/font/google";
+import { Shrikhand } from "next/font/google";
 
 const poiret = Poiret_One({
+  weight: ["400"],
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const shrikhand = Shrikhand({
   weight: ["400"],
   subsets: ["latin"],
   display: "swap",
@@ -24,7 +31,7 @@ export default function Sidebar() {
         <div className="flex h-20 items-center justify-center border-b">
           <BookOpen className="mr-2 h-8 w-8 text-indigo-600" />
           <span
-            className={`text-2xl font-bold text-[#6366F1] ${poiret.className}`}
+            className={`text-2xl font-bold bg-gradient-to-r bg-clip-text text-transparent from-[#6366F1] via-[#8B5CF6] to-[#D946EF] ${shrikhand.className}`}
           >
             memo gAmI
           </span>
